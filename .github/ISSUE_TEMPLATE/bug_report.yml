@@ -1,0 +1,35 @@
+name: Bug report
+description: Report an issue with an existing formula or installation failure
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting an issue in the GLASTOR® Homebrew Tap!
+  - type: input
+    id: formula
+    attributes:
+      label: Affected Formula
+      description: Which formula is failing? (e.g. specter, byte-gauge, zerho)
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System & Architecture
+      options:
+        - macOS (Apple Silicon / ARM64)
+        - macOS (Intel / x86_64)
+        - Linux (x86_64)
+        - Linux (ARM64)
+        - Windows (WSL2)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Command Output / Error Logs
+      description: Paste the terminal output when running `brew install` or `brew test`.
+      render: shell
+    validations:
+      required: true
+

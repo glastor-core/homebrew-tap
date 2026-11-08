@@ -1,0 +1,22 @@
+name: Formula / Feature Request
+description: Request a new formula or support for another tool in the GLASTOR® ecosystem
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Suggest an enhancement or new formula for the GLASTOR® Homebrew Tap.
+  - type: input
+    id: tool_name
+    attributes:
+      label: Tool Name
+      description: What tool or feature should be added? (e.g. medusa CLI, hyper-flow CLI)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description & Justification
+      description: How does this tool benefit developers in the GLASTOR® ecosystem?
+    validations:
+      required: true
+

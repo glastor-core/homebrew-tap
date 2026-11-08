@@ -1,0 +1,64 @@
+name: Update Formula on Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: 'Formula name (specter, byte-gauge, zerho)'
+        required: true
+        type: choice
+        options:
+          - specter
+          - byte-gauge
+          - zerho
+      version:
+        description: 'New Version (without v prefix, e.g. 0.2.1)'
+        required: true
+        type: string
+  repository_dispatch:
+    types: [release-published]
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout tap
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Extract Inputs
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "FORMULA=${{ github.event.client_payload.formula }}" >> $GITHUB_OUTPUT
+            echo "VERSION=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "FORMULA=${{ github.event.inputs.formula }}" >> $GITHUB_OUTPUT
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update Formula version
+        run: |
+          FORMULA="${{ steps.vars.outputs.FORMULA }}"
+          VERSION="${{ steps.vars.outputs.VERSION }}"
+          FILE="Formula/${FORMULA}.rb"
+          if [ -f "$FILE" ]; then
+            sed -i -E "s/version \"[0-9]+\.[0-9]+\.[0-9]+\"/version \"${VERSION}\"/" "$FILE"
+          fi
+
+      - name: Create Pull Request or Commit
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(${<!-- -->{ steps.vars.outputs.FORMULA }}): bump to ${{ steps.vars.outputs.VERSION }}"
+          title: "chore(${<!-- -->{ steps.vars.outputs.FORMULA }}): bump to ${{ steps.vars.outputs.VERSION }}"
+          body: "Automated bump of `${{ steps.vars.outputs.FORMULA }}` to version `${{ steps.vars.outputs.VERSION }}`."
+          branch: "bump/${{ steps.vars.outputs.FORMULA }}-v${{ steps.vars.outputs.VERSION }}"
+

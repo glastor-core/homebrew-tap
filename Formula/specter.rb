@@ -1,24 +1,24 @@
 class Specter < Formula
   desc "Polyglot AST API contract differ and SemVer gatekeeper in Rust"
   homepage "https://glastor.es"
-  version "0.2.0"
+  version "0.3.0"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
       url "https://github.com/glastor-core/specter/releases/download/v#{version}/specter-macos-arm64"
-      sha256 "fca80c76516dc98323dfe20e518c2490df8e008de13142d3738773819bc21716"
+      sha256 "221d2f4b21a5d279a71260ac44cf1a5cc775e7f3a42f1fc0c1c160fd902fdd85"
     end
     on_intel do
       url "https://github.com/glastor-core/specter/releases/download/v#{version}/specter-macos-x64"
-      sha256 "e81700914d336e8000692f936e315b65b0ad5a146155ea1d304fd792b43e9a1d"
+      sha256 "2b96c26f961e0c6c8b40aa454846025188e6e99b70a8dd271f8e3bf38e86075c"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/glastor-core/specter/releases/download/v#{version}/specter-linux-x64"
-      sha256 "d1eb66d441bb6968eca307911ca0d83c471a3fe63fbedca5ad3737397072b588"
+      sha256 "0155f30839c66135ef8416f35852ded6b0f7c88d0c2c91a231d035fd7d57ed60"
     end
   end
 

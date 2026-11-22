@@ -1,24 +1,24 @@
 class ByteGauge < Formula
   desc "SIMD binary security, checksec hardening, and SBOM auditor"
   homepage "https://glastor.es"
-  version "0.1.1"
-  license "Apache-2.0"
+  version "0.3.0"
+  license "MIT"
 
   on_macos do
     on_arm do
       url "https://github.com/glastor-core/byte-gauge/releases/download/v#{version}/byte-gauge-macos-arm64"
-      sha256 "7a0baaa414921ca953ba8c4ef17ad555ca4c04fb55698802ef623e8f3fc27a5c"
+      sha256 "dea2f58f2485031f22c89a427ee244d84374d2bf4733f035e6fe97fa5799a52f"
     end
     on_intel do
       url "https://github.com/glastor-core/byte-gauge/releases/download/v#{version}/byte-gauge-macos-x64"
-      sha256 "28823d1e5ff9a85a054aac7b3b98cbbb3e93d17bedaf6309f7d9ab380ed5092e"
+      sha256 "7c8346dd83f39a4dd783f3fcc2fd813ed4b99e0df20a571e88a5f5ec48771055"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/glastor-core/byte-gauge/releases/download/v#{version}/byte-gauge-linux-x64"
-      sha256 "5edfe482208a0d01ee77f4469720dd3b6038a329e46950275a5e3d744ec4df9b"
+      sha256 "7131eeae8be42bd724332ae7ae6952ec066bb25175af3380a9587ce54fbf00fe"
     end
   end
 

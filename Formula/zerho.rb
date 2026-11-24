@@ -1,33 +1,29 @@
+# Homebrew Formula for glastor-core/homebrew-tap
 class Zerho < Formula
-  desc "Next-generation documentation engine for Deno & Edge"
-  homepage "https://glastor.es"
-  version "1.9.0"
-  license "Apache-2.0"
+  desc "Zero-Node, 100% Safe Rust frontend dev server and production bundler"
+  homepage "https://zerho.xyz"
+  version "1.0.0"
+  license any_of: ["MIT", "Apache-2.0"]
 
   on_macos do
-    on_arm do
-      url "https://github.com/glastor-core/zerho/releases/download/v#{version}/zerho-darwin-arm64"
-      sha256 "7c23670342929fb52e37ee1af1bd61c9fdce102ee56ead796299b6ce572fb588"
-    end
-    on_intel do
-      url "https://github.com/glastor-core/zerho/releases/download/v#{version}/zerho-darwin-x86_64"
-      sha256 "dd582c31f9207baede6c2db9a073afc26121a3c978c11d4ff13803e553ebd7c0"
+    if Hardware::CPU.arm?
+      url "https://github.com/glastor-core/jester/releases/download/v#{version}/zerho-macos-arm64.tar.gz"
+      sha256 "89844ff31d00a739837ce07605b3c090c9f7953c70884831befbe535dea20c18"
     end
   end
 
   on_linux do
-    on_intel do
-      url "https://github.com/glastor-core/zerho/releases/download/v#{version}/zerho-linux-x86_64"
-      sha256 "9673e8a29aabea7de2e90d308ab41424203621444fe940d6b5a5cdb7969c7352"
+    if Hardware::CPU.intel?
+      url "https://github.com/glastor-core/jester/releases/download/v#{version}/zerho-linux-x86_64.tar.gz"
+      sha256 "94a5c98623d5dcb9e9fa4c590cac1d499ec09ad5962a933ce0cc52809df3b173"
     end
   end
 
   def install
-    binary_name = Dir["zerho*"].first || (OS.mac? ? (Hardware::CPU.arm? ? "zerho-darwin-arm64" : "zerho-darwin-x86_64") : "zerho-linux-x86_64")
-    bin.install binary_name => "zerho"
+    bin.install "zerho"
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/zerho --version")
+    assert_match "zerho #{version}", shell_output("#{bin}/zerho --version")
   end
 end

@@ -6,6 +6,9 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test-bot:
     strategy:
@@ -44,4 +47,3 @@ jobs:
             brew install --build-from-source "$formula" || true
             brew test "$formula" || true
           done
-
